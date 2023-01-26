@@ -1,0 +1,86 @@
+1  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+    2  sudo dpkg -i minikube_latest_amd64.deb
+    3  minikube start
+    4  ls
+    5  cd ..
+    6  ls
+    7  cd azureuser/
+    8  git clone https://github.com/KonaMarsTech/lms-public.git
+    9  git branch -f
+   10  git branch -r
+   11  cd lms-public/
+   12  ls
+   13  git branch -r
+   14  git checkout k8s-daemonset-ingress-config-map
+   15  cd webapp/
+   16  docker build --tag lms-web
+   17  docker build --tag lms-web .
+   18  minikube image load lms-web
+   19  cd ..
+   20  ls
+   21  cd api/
+   22  ls
+   23  minikube image load lms-public-api .
+   24  minikube image ls
+   25  docker build --tag lms-public-api .
+   26  minikube image load lms-public-api
+   27  ls
+   28  cd ..
+   29  ls
+   30  cd webapp/
+   31  vi .env 
+   32  minikube image load lms-web-v1
+   33  minikube image load lms-web-v1 .
+   34  docker build --tag lms-web-v1 .
+   35  minikube image load lms-web-v1
+   36  minikube image ls
+   37  cd ..
+   38  ls
+   39  cd ks
+   40  ls
+   41  vi k8s/
+   42  cd k8s/
+   43  ls
+   44  vi frontend-deployment.yaml 
+   45  vi api-deployment.yaml 
+   46  kubectl
+   47  sudo snap install kubectl --classic
+   48  cd ..
+   49  kubectl apply -f k8s/
+   50  kubectl get pods
+   51  minikube service -all
+   52  minikube service --all
+   53  sudo apt install nginx
+   54  ls
+   55  cd /etc/nginx/sites-enabled/
+   56  ls
+   57  sudo rm default 
+   58  cd ..
+   59  ls
+   60  cd sites-enabled/
+   61  cd ..
+   62  cd sites-available/
+   63  ls
+   64  minikube service --all
+   65  sudo vi lms-app
+   66  sudo ln -s /etc/nginx/sites-available/lms-app /etc/nginx/sites-enabled/lms-app
+   67  sudo nginx -s reload
+   68  sudo nginx -t
+   69  ls -altr
+   70  vi lms-app 
+   71  kubectl get pods
+   72  minikube service --all
+   73  curl http://192.168.49.2:31727
+   74  ls -altr
+   75  vi lms-app 
+   76  sudo vi lms-app 
+   77  clear
+   78  sudo vi lms-app 
+   79  cd ..
+   80  ls
+   81  cd sites-available/
+   82  ls
+   83  sudo vi lms-app 
+   84  sudo nginx -s reload
+   85  sudo nginx -t
+   86  history 
