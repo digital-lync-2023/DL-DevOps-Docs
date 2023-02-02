@@ -1,0 +1,57 @@
+1  nginx
+    sudo apt install nginx
+    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&sudo apt-get install -y nodejs
+    nginx -v
+    
+    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get -y install postgresql
+    sudo su postgres
+
+    sudo rm /etc/nginx/sites-enabled/default
+
+    sudo vi /etc/nginx/sites-available/lms-app
+    
+    server {
+    server_name konastack.com;
+    location / {
+        root /home/azureuser/lms-public/webapp/dist;
+    }
+    location /api {
+        proxy_pass http://localhost:8080;
+    }
+    }
+    
+   sudo ln -s /etc/nginx/sites-available/lms-app /etc/nginx/sites-enabled/lms-app
+   sudo nginx -s reload
+   
+   git clone https://github.com/KonaMarsTech/lms-public.git
+   git branch -r
+   cd lms-public/
+   29  git branch -r
+   30  git checkout vm-docker-cicd
+   
+   
+   74  sudo snap install core; sudo snap refresh core
+   75  sudo snap install --classic certbot
+   76  sudo ln -s /snap/bin/certbot /usr/bin/certbot
+   77  sudo certbot --nginx
+ 
+   79  npm install
+   80  sudo npm install -g pm2
+   81  vi .env
+   82  npx prisma db push
+   83  npm run build 
+   84  NODE_PORT=8080 pm2 start -i 0 build/index.js
+   85  pm2 monit
+
+   87  curl http://localhost:8080/api
+
+   92  cd lms-public/webapp/
+   93  ls
+   94  ls -altr
+   95  vi .env 
+   96  npm install
+   97  npm run build
+ 
