@@ -1,0 +1,54 @@
+     7sudo apt-get update
+   74  sudo apt-get install     ca-certificates     curl     gnupg
+   75  sudo mkdir -m 0755 -p /etc/apt/keyrings
+   76  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+   77  echo   "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+   78    "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   79  sudo apt-get update
+   80  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   81  sudo groupadd docker
+   82  sudo usermod -aG docker $USER
+   83  newgrp docker
+    
+    5  git clone https://github.com/KonaMarsTech/lms-public.git
+    
+    7  cd lms-public/
+
+    9  pwd
+   10  git status
+   11  git branch -r
+   12  git checkout vm-docker-cicd
+   19  cd webapp/
+   25  docker build --tag lms-web . 
+   26  cd ..
+   28  cd api/
+   30  docker build --tag lms-public-api . 
+ 
+   43  docker network create lms-network 
+
+   46  docker run -d -p 5432:5432 --network lms-network -e POSTGRES_PASSWORD=password --name lmsdb postgres
+   49  docker run -d -p 8080:8080 --network lms-network -e DATABASE_URL=postgresql://postgres:password@lmsdb:5432/postgres -e PORT=8080 -e MODE=local lms-public-api
+   51  docker run -d -p 80:80 --name lmsfe lms-web
+
+   55  curl http://localhost:8080/api
+ 
+  139  sudo apt install nginx -y
+
+  149  sudo rm /etc/nginx/sites-enabled/default
+  150  sudo vi /etc/nginx/sites-available/lms-app
+  155  sudo ln -s /etc/nginx/sites-available/lms-app /etc/nginx/sites-enabled/lms-app
+
+  162  sudo snap install core; sudo snap refresh core
+  163  sudo snap install --classic certbot
+  164  sudo ln -s /snap/bin/certbot /usr/bin/certbot
+  165  sudo certbot --nginx
+
+  170  cd lms-public/
+  171  ls
+  172  cd webapp/
+  173  ls
+  174  vi .env 
+  175  history |grep docker 
+  176  docker build -t lms-web:latest .
+
+  188  docker run -d -p 3000:80 --name lmsfe lms-web
